@@ -1,0 +1,22 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="./solver-ui.js"></script>
+</head>
+
+<body>
+  <h1>A Countdown Numbers Game Solver</h1>
+  <div id="form-group">
+    <label for="target">Target:</label>
+    <input type="number" id="target" name="target" value="952" />
+    <label for="numbers">Numbers (space delimited, max 6):</label>
+    <input type="text" id="numbers" name="numbers" value="3 6 25 50 75 100" />
+    <input type="button" id="solveButton" value="Solve" />
+  </div>
+  
+  <div id="solutions-title">Solutions:</div>
+  <div id="solutions-list"></div>
+</body>
+
+</html>

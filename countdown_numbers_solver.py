@@ -1,9 +1,5 @@
-def _swap_args(a, b):
-  return b, a
-
-
-def _args(a, b):
-  return a, b
+def _swap_args(a, b): return b, a
+def _args(a, b): return a, b
 
 #
 # A hash to contain info about possible operators
@@ -41,8 +37,8 @@ def _is_valid_operation(op_key, lhs, rhs):
 def _do_operation(op_key, lhs, rhs):
   lhs_value = _get_expression_value(lhs)
   rhs_value = _get_expression_value(rhs)
-  if not _is_valid_operation(op_key, lhs_value, rhs_value):
-    return 0, None
+  if not _is_valid_operation(op_key, lhs_value, rhs_value): return 0, None
+
   op_symbol, op_fn, args_fn = _operators[op_key]
   result = op_fn(lhs_value, rhs_value)
   lhs, rhs = args_fn(lhs, rhs)                 # Potentially swap the args, for DIV2 and SUB2
@@ -54,7 +50,7 @@ def _do_operation(op_key, lhs, rhs):
 #
 def _new_expression_list(expressions, new_expression, i, j):
   # Replace the element at position i with the new expression and exclude the element at position j
-  result = expressions[0:i] + [new_expression] + expressions[i + 1:j]
+  result = expressions[:i] + [new_expression] + expressions[i + 1:j]
   # Concatenate any elements after position j
   if j < len(expressions):
     result += expressions[j + 1:]

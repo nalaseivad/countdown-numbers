@@ -1,0 +1,42 @@
+body {
+  font-size: 1rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  width: 30rem;
+  text-align: center;
+}
+
+label {
+  justify-self: end;
+}
+
+input {
+  justify-self: end;
+  width: 100%;
+}
+
+#form-group {
+  display: grid;
+  grid-template-columns: 15rem 15rem;
+  gap: 10px;
+  align-items: center;
+}
+
+#solutions-title {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#solutions-list {
+  padding-left: 10px;
+  border: 1px solid #ccc;
+  min-height: 50px;
+  width: 30rem;
+}
+
+.solutions-list-item {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
