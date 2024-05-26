@@ -68,12 +68,13 @@ const getExpressionValue = (expression) => Array.isArray(expression) ? expressio
 //
 // The main recursive routine to search the space of possible expressions and find those that evaluate to the target
 //
-const recursiveFindExpressionsForTarget = (expressions, target, foundFn) => {
-  const firstExpression = expressions[0];
-  if (getExpressionValue(firstExpression) === target)
-    if (foundFn(firstExpression))
-      return true;
-
+const findExpressionsForTarget = (expressions, target, foundFn) => {
+  for (const expression of expressions) {
+    if (getExpressionValue(expression) === target)
+      if (foundFn(expression))
+        return true;
+  }
+  
   for (let i = 0; i < expressions.length - 1; i++) {
     const ei = expressions[i];
     for (let j = i + 1; j < expressions.length; j++) {
@@ -82,27 +83,12 @@ const recursiveFindExpressionsForTarget = (expressions, target, foundFn) => {
         const [valid, newExpression] = doOperation(opKey, ei, ej);
         if (!valid) continue;
         const newExpressions = newExpressionList(expressions, newExpression, i, j);
-        if (recursiveFindExpressionsForTarget(newExpressions, target, foundFn))
+        if (findExpressionsForTarget(newExpressions, target, foundFn))
           return true;
       }
     }
   }
   return false;
-};
-
-
-//
-// The public solver function
-//
-const findExpressionsForTarget = (numbers, target, foundFn) => {
-  // Check if any number in the array matches the target
-  for (const number of numbers) {
-    if (number === target)
-      if (foundFn(number))
-        return;  
-  }
-  // Call the recusive finder
-  recursiveFindExpressionsForTarget(numbers, target, foundFn);
 };
 
 

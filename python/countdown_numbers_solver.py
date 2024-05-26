@@ -51,6 +51,7 @@ def _do_operation(op_key, lhs, rhs):
 def _new_expression_list(expressions, new_expression, i, j):
   # Replace the element at position i with the new expression and exclude the element at position j
   result = expressions[:i] + [new_expression] + expressions[i + 1:j]
+  #result = [new_expression] + expressions[i + 1:j]
   # Concatenate any elements after position j
   if j < len(expressions):
     result += expressions[j + 1:]
@@ -64,15 +65,17 @@ def _get_expression_value(expression):
   return expression[0] if type(expression) is tuple else expression
 
 
+########################################################################################################################
+
 #
-# The main recursive routine to search the space of possible expressions and find those that evaluate to the target
+# The public solver - Recursively search the space of possible expressions and find those that evaluate to the target
 #
-def _find_expressions_for_target(expressions, target, found_fn):
-  first_expression = expressions[0]
-  if _get_expression_value(first_expression) == target:
-    if found_fn(first_expression):
-      return 1
-    
+def find_expressions_for_target(expressions, target, found_fn):
+  for expression in expressions:
+    if _get_expression_value(expression) == target:
+      if found_fn(expression):
+        return 1
+
   for i in range(len(expressions) - 1):
     ei = expressions[i]
     for j in range(i + 1, len(expressions)):
@@ -81,21 +84,5 @@ def _find_expressions_for_target(expressions, target, found_fn):
         valid, new_expression = _do_operation(op_key, ei, ej)
         if not valid: continue
         new_expressions = _new_expression_list(expressions, new_expression, i, j)
-        if _find_expressions_for_target(new_expressions, target, found_fn):
+        if find_expressions_for_target(new_expressions, target, found_fn):
           return 1
-        
-
-########################################################################################################################
-
-
-#
-# The public solver function
-#
-def find_expressions_for_target(numbers, target, found_fn):
-  # Test for a trivial solution, i.e. one of the numbers is equal to the target
-  for number in numbers:
-    if number == target:
-      if found_fn(number):
-        return
-  # Call the recursive finder
-  _find_expressions_for_target(numbers, target, found_fn)
